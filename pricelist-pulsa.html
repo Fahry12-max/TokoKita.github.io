@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price List Pulsa - Fahryy Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #13131a;
+    --border: #1e1e2e;
+    --accent: #7c3aed;
+    --accent2: #06b6d4;
+    --text: #e2e8f0;
+    --muted: #64748b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+    background-image: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.12) 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.08) 0%, transparent 50%);
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: fadeDown 0.5s ease;
+  }
+
+  .store-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    padding: 4px 16px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 40%, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border-color: transparent;
+  }
+
+  /* Operator section */
+  .op-section { display: none; }
+  .op-section.active { display: block; animation: fadeUp 0.3s ease; }
+
+  .op-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .op-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .op-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  /* Price grid */
+  .price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .price-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .price-item:hover {
+    border-color: var(--accent2);
+    transform: translateY(-2px);
+  }
+
+  .nominal {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .harga {
+    font-size: 13px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .tap-hint {
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* CTA */
+  .cta {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .cta-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .cta-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 11px 28px;
+    border-radius: 99px;
+    text-decoration: none;
+  }
+
+  .note {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="index.html" style="display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:12px; text-decoration:none; margin-bottom:16px; font-weight:600;">
+    ← Kembali ke Price List Utama
+  </a>
+  <div class="store-badge">📱 Fahryy Store</div>
+  <h1>Price List<br>Pulsa</h1>
+  <p class="subtitle">Semua Operator Ready • Proses Instan ⚡</p>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="showOp('telkomsel', this)">🔴 Telkomsel</div>
+  <div class="tab" onclick="showOp('indosat', this)">🟡 Indosat</div>
+  <div class="tab" onclick="showOp('xl', this)">🔵 XL/Axis</div>
+  <div class="tab" onclick="showOp('three', this)">🟢 Three</div>
+  <div class="tab" onclick="showOp('smartfren', this)">🟣 Smartfren</div>
+</div>
+
+<!-- Telkomsel -->
+<div id="telkomsel" class="op-section active">
+  <div class="op-header">
+    <div class="op-dot" style="background:#ff0000"></div>
+    <div class="op-name">Telkomsel</div>
+  </div>
+  <div class="price-grid">
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%205.000">
+      <div class="nominal">Rp 5.000</div>
+      <div class="harga">Rp 6.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%2010.000">
+      <div class="nominal">Rp 10.000</div>
+      <div class="harga">Rp 11.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%2015.000">
+      <div class="nominal">Rp 15.000</div>
+      <div class="harga">Rp 15.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%2020.000">
+      <div class="nominal">Rp 20.000</div>
+      <div class="harga">Rp 20.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%2025.000">
+      <div class="nominal">Rp 25.000</div>
+      <div class="harga">Rp 25.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%2030.000">
+      <div class="nominal">Rp 30.000</div>
+      <div class="harga">Rp 30.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%2050.000">
+      <div class="nominal">Rp 50.000</div>
+      <div class="harga">Rp 50.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Telkomsel%20100.000">
+      <div class="nominal">Rp 100.000</div>
+      <div class="harga">Rp 101.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+  </div>
+</div>
+
+<!-- Indosat -->
+<div id="indosat" class="op-section">
+  <div class="op-header">
+    <div class="op-dot" style="background:#ffcc00"></div>
+    <div class="op-name">Indosat</div>
+  </div>
+  <div class="price-grid">
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%205.000">
+      <div class="nominal">Rp 5.000</div>
+      <div class="harga">Rp 6.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%2010.000">
+      <div class="nominal">Rp 10.000</div>
+      <div class="harga">Rp 11.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%2015.000">
+      <div class="nominal">Rp 15.000</div>
+      <div class="harga">Rp 16.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%2020.000">
+      <div class="nominal">Rp 20.000</div>
+      <div class="harga">Rp 21.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%2025.000">
+      <div class="nominal">Rp 25.000</div>
+      <div class="harga">Rp 26.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%2030.000">
+      <div class="nominal">Rp 30.000</div>
+      <div class="harga">Rp 31.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%2050.000">
+      <div class="nominal">Rp 50.000</div>
+      <div class="harga">Rp 50.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Indosat%20100.000">
+      <div class="nominal">Rp 100.000</div>
+      <div class="harga">Rp 95.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+  </div>
+</div>
+
+<!-- XL/Axis -->
+<div id="xl" class="op-section">
+  <div class="op-header">
+    <div class="op-dot" style="background:#0066cc"></div>
+    <div class="op-name">XL / Axis</div>
+  </div>
+  <div class="price-grid">
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20XL%205.000">
+      <div class="nominal">Rp 5.000</div>
+      <div class="harga">Rp 6.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20XL%2010.000">
+      <div class="nominal">Rp 10.000</div>
+      <div class="harga">Rp 11.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20XL%2025.000">
+      <div class="nominal">Rp 25.000</div>
+      <div class="harga">Rp 26.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20XL%2050.000">
+      <div class="nominal">Rp 50.000</div>
+      <div class="harga">Rp 51.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20XL%2070.000">
+      <div class="nominal">Rp 70.000</div>
+      <div class="harga">Rp 71.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20XL%20100.000">
+      <div class="nominal">Rp 100.000</div>
+      <div class="harga">Rp 101.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+  </div>
+</div>
+
+<!-- Three -->
+<div id="three" class="op-section">
+  <div class="op-header">
+    <div class="op-dot" style="background:#00cc66"></div>
+    <div class="op-name">Three (3)</div>
+  </div>
+  <div class="price-grid">
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Three%205.000">
+      <div class="nominal">Rp 5.000</div>
+      <div class="harga">Rp 6.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Three%2010.000">
+      <div class="nominal">Rp 10.000</div>
+      <div class="harga">Rp 11.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Three%2030.000">
+      <div class="nominal">Rp 30.000</div>
+      <div class="harga">Rp 30.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Three%2050.000">
+      <div class="nominal">Rp 50.000</div>
+      <div class="harga">Rp 49.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Three%2080.000">
+      <div class="nominal">Rp 80.000</div>
+      <div class="harga">Rp 78.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Three%20100.000">
+      <div class="nominal">Rp 100.000</div>
+      <div class="harga">Rp 99.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+  </div>
+</div>
+
+<!-- Smartfren -->
+<div id="smartfren" class="op-section">
+  <div class="op-header">
+    <div class="op-dot" style="background:#cc0066"></div>
+    <div class="op-name">Smartfren</div>
+  </div>
+  <div class="price-grid">
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Smartfren%205.000">
+      <div class="nominal">Rp 5.000</div>
+      <div class="harga">Rp 6.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Smartfren%2010.000">
+      <div class="nominal">Rp 10.000</div>
+      <div class="harga">Rp 11.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Smartfren%2025.000">
+      <div class="nominal">Rp 25.000</div>
+      <div class="harga">Rp 25.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Smartfren%2050.000">
+      <div class="nominal">Rp 50.000</div>
+      <div class="harga">Rp 50.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Smartfren%2075.000">
+      <div class="nominal">Rp 75.000</div>
+      <div class="harga">Rp 75.500</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+    <a class="price-item" href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa%20Smartfren%2090.000">
+      <div class="nominal">Rp 90.000</div>
+      <div class="harga">Rp 91.000</div>
+      <div class="tap-hint">Tap untuk order</div>
+    </a>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-text">Mau Order Pulsa? 📱</div>
+  <div class="cta-sub">Tap nominal di atas atau chat langsung</div>
+  <a href="https://wa.me/6285810741165?text=Halo%20Fachry%2C%20mau%20beli%20pulsa!" class="cta-btn">Chat via WhatsApp</a>
+</div>
+
+<p class="note">⚡ Proses instan • Harga dapat berubah sewaktu-waktu</p>
+
+<script>
+  function showOp(id, el) {
+    document.querySelectorAll('.op-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
