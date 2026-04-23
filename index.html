@@ -359,6 +359,52 @@
     to { opacity: 1; transform: translateY(0); }
   }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://kpnxfjniijbfwdaufrcz.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtwbnhmam5paWpiZndkYXVmcmN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4Njg0NjMsImV4cCI6MjA5MjQ0NDQ2M30.fACtHknv7tPyvYMI-KihEhZt4wOY28D6Q43h1mlLgjc'
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+</script>
+<script>
+  async function testKoneksi() {
+    const { data, error } = await supabaseClient
+    .from('products')
+    .select('*')
+
+    if (error) {
+      console.log('Error:', error)
+    } else {
+      console.log('Data:', data)
+    }
+  }
+  testKoneksi()
+</script>
+<script>
+  async function loadProduk() {
+    const { data, error } = await supabaseClient
+      .from('products')
+      .select('*')
+      .eq('category', 'aplikasi')
+
+    if (error) return console.log(error)
+    const container = document.getElementById('produk-aplikasi')
+    container.innerHTML = ''
+
+    data.forEach(produk => {
+      container.innerHTML += `
+        <div class="card">
+          <div class="app-name">${produk.name}</div>
+          <div class="app-duration">${produk.description}</div>
+          <div class="price">${(produk.price/1000)}rb</div>
+          <a class="order-btn" href="https://wa.me/6285810741165?text=Halo%20Asta%2C%20mau%20order%20${produk.name}!">Order Sekarang</a>
+        </div>
+      `
+    })
+  }
+  loadProduk()
+</script>
+  
 </head>
 <body>
 
@@ -371,7 +417,7 @@
 <!-- Aplikasi Premium -->
 <div class="section">
   <div class="section-title">💎 Aplikasi Premium</div>
-  <div class="grid">
+  <div class="grid" id="produk-aplikasi">
     <div class="card">
       <span class="app-icon">🎬</span>
       <div class="app-name">Netflix</div>
